@@ -32,7 +32,7 @@ RUN chmod -R 775 storage bootstrap/cache
 RUN composer install --no-dev --optimize-autoloader
 
 # Porta usada pelo artisan serve
-EXPOSE 8000
+EXPOSE 1010
 
 # Start da aplicação Laravel
-CMD php artisan serve --host=0.0.0.0 --port=8000
+CMD php artisan serve --host=0.0.0.0 --port=1010
