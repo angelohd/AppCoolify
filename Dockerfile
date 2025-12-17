@@ -1,27 +1,38 @@
-# Estágio 1: PHP e Dependências
-FROM php:8.3-fpm-alpine
+FROM php:8.2-cli
 
-# Instalar extensões necessárias do PHP
-RUN apk add --no-cache \
-    zip libzip-dev libpng-dev icu-dev libpq-dev \
-    && docker-php-ext-install pdo_mysql zip gd intl opcache
-
-# Instalar Composer
-COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
-
-# Configurar diretório de trabalho
+# Diretório de trabalho
 WORKDIR /var/www/html
 
-# Copiar arquivos do projeto
+# Dependências básicas do Laravel
+RUN apt-get update && apt-get install -y \
+    git \
+    unzip \
+    zip \
+    libpng-dev \
+    libonig-dev \
+    libxml2-dev \
+    libzip-dev \
+    && docker-php-ext-install \
+    pdo \
+    pdo_mysql \
+    mbstring \
+    zip \
+    gd
+
+# Composer
+COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
+
+# Código da aplicação
 COPY . .
 
-# Instalar dependências do Composer (sem dev)
+# Permissões
+RUN chmod -R 775 storage bootstrap/cache
+
+# Dependências PHP
 RUN composer install --no-dev --optimize-autoloader
 
-# Ajustar permissões para o Laravel
-RUN chown -R www-data:www-data storage bootstrap/cache
+# Porta usada pelo artisan serve
+EXPOSE 8000
 
-# Porta exposta para o Coolify (geralmente via Proxy)
-EXPOSE 9000
-
-CMD ["php-fpm"]
+# Start da aplicação Laravel
+CMD php artisan serve --host=0.0.0.0 --port=8000
