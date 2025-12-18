@@ -2,7 +2,7 @@ name: Redeploy Coolify
 
 on:
   push:
-    branches: [ main ]
+    branches: [ master ]
 
 jobs:
   deploy:
