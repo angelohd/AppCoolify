@@ -1,0 +1,13 @@
+name: Redeploy Coolify
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger Coolify Redeploy
+        run: |
+          curl -X POST https://coolify.ndaysystem.com/api/v1/deploy?uuid=fcos84gg4oo0og448cgc48k4&force=false
