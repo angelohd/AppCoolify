@@ -23,6 +23,9 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'categoria_id',
+        'pessoa_id',
+        'estatus'
     ];
 
     /**
@@ -58,7 +61,17 @@ class User extends Authenticatable
         return Str::of($this->name)
             ->explode(' ')
             ->take(2)
-            ->map(fn ($word) => Str::substr($word, 0, 1))
+            ->map(fn($word) => Str::substr($word, 0, 1))
             ->implode('');
+    }
+
+    public function pessoa()
+    {
+        return $this->hasOne(Pessoa::class, 'id', 'pessoa_id');
+    }
+
+    public function categoria()
+    {
+        return $this->hasOne(categoria::class, 'id', 'categoria_id');
     }
 }

@@ -29,4 +29,8 @@ Route::middleware(['auth'])->group(function () {
             ),
         )
         ->name('two-factor.show');
+
+        Route::prefix('administrador')->name('administrador.')->group(function(){
+            Route::get('utilizadores', \App\Livewire\Administrador\Utilizador::class)->name('utilizadores');
+        });
 });
