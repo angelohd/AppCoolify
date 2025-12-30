@@ -12,7 +12,8 @@ return new class extends Migration {
     {
         Schema::create('imgens_imovels', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('imovel_id')->nullable()->constrained('imovels')->nullOnDelete()->cascadeOnUpdate();
+            $table->unsignedBigInteger('imovel_id');
+            $table->foreign('imovel_id')->references('id')->on('imovels')->onDelete('cascade');
             $table->string('caminho_imagem');
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->useCurrent()->useCurrentOnUpdate();

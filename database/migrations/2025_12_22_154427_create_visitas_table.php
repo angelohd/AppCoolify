@@ -12,10 +12,12 @@ return new class extends Migration {
     {
         Schema::create('visitas', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('imovel_id')->constrained('imovels')->nullOnDelete()->cascadeOnUpdate();
-            $table->foreignId('visitante')->nullable()->constrained('users')->nullOnDelete()->cascadeOnUpdate()->comment('Pessoa que vai vizitar a casa');
+            $table->unsignedBigInteger('imovel_id');
+            $table->unsignedBigInteger('visitante');
+            $table->foreign('imovel_id')->references('id')->on('imovels')->onDelete('cascade');
+            $table->foreign('visitante')->references('id')->on('users')->onDelete('cascade')->comment('Pessoa que vai vizitar a casa');
             $table->date('data_visita');
-            $table->enum('status', ['pendente', 'cancelado', 'em_curso', 'concluido'])->default('pendente');
+            $table->enum('status', ['pendente', 'cancelado','confirmada', 'em_curso', 'concluido'])->default('pendente');
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->useCurrent()->useCurrentOnUpdate();
             $table->softDeletes();

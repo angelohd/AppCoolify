@@ -13,11 +13,16 @@ return new class extends Migration {
         Schema::create('imovels', function (Blueprint $table) {
             $table->id();
             $table->text('endereco');
-            $table->enum('sona', ['Urbana', 'Suburbana']);
+            $table->enum('zona', ['Urbana', 'Suburbana']);
             $table->text('descricao')->nullable();
             $table->decimal('preco_renda', 10, 2);
             $table->boolean('disponivel')->default(false);
-            $table->foreignId('user_id')->nullable()->constrained('users')->nullOnDelete()->cascadeOnUpdate();
+            $table->boolean('aprovado')->default(false);
+            $table->text('observacao');
+            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('aprovado_por')->nullable();
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('aprovado_por')->references('id')->on('users')->onDelete('cascade')->comment('Utilizador que aprovou a casa');
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->useCurrent()->useCurrentOnUpdate();
             $table->softDeletes();

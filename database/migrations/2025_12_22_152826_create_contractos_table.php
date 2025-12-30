@@ -12,9 +12,12 @@ return new class extends Migration {
     {
         Schema::create('contractos', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('imovel_id')->constrained('imovels')->nullOnDelete()->cascadeOnUpdate();
-            $table->foreignId('inquilono')->nullable()->constrained('users')->nullOnDelete()->cascadeOnUpdate()->comment('Pessoa que aluga o imovel');
-            $table->foreignId('mediador')->nullable()->constrained('users')->nullOnDelete()->cascadeOnUpdate()->comment('Pessoa que faz a mediação do contrato');
+            $table->unsignedBigInteger('imovel_id');
+            $table->unsignedBigInteger('inquilono');
+            $table->unsignedBigInteger('mediador');
+            $table->foreign('imovel_id')->references('id')->on('imovels')->onDelete('cascade');
+            $table->foreign('inquilono')->nullable()->references('id')->on('users')->onDelete('cascade')->comment('Pessoa que aluga o imovel');
+            $table->foreign('mediador')->nullable()->references('id')->on('users')->onDelete('cascade')->comment('Pessoa que faz a mediação do contrato');
             $table->date('data_inicio');
             $table->date('data_fim')->nullable();
             $table->decimal('valor_mensal', 10, 2);
