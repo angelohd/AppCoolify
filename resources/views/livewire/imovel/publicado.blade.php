@@ -26,7 +26,7 @@
 
                 <!-- Título -->
                 <h2 class="text-xl font-normal text-blue-600 hover:underline cursor-pointer">
-                    <a href="{{ route('imovel.ver',$item->id) }}"> {{ $item->endereco }}</a>
+                    <a href="{{ route('imovel.ver',$item->id) }}">{{ $item->zona }} - {{ $item->endereco }}</a>
 
                 </h2>
                 {{--

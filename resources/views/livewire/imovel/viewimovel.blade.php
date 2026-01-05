@@ -16,6 +16,13 @@
      --}}
 
     <!-- Conteúdo -->
+    <div class="flex justify-end gap-2">
+
+        <flux:link href="/" color="orange">
+            nova pesquisa
+        </flux:link>
+
+    </div>
     <div class="max-w-4xl mx-auto px-4 py-10 space-y-8">
 
         <!-- Título -->
@@ -73,10 +80,9 @@
     <div class="max-w-4xl mx-auto px-4 py-10 space-y-4">
         <br>
         @include('components.alert')
-        <flux:input type="date" max="2999-12-31" label="Data da visita" wire:model.defer="data_visita" required/>
+        <flux:input type="date" max="2999-12-31" label="Data da visita" wire:model.defer="data_visita" required />
         <flux:button wire:click="AgendarVisita" color="green" icon="calendar">
             Agendar Visita
         </flux:button>
-
     </div>
 </div>

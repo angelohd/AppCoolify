@@ -14,7 +14,10 @@ Route::get('/', function () {
     return view('welcome');
 })->name('home');
 
+Route::get('/pesquisar', \App\Livewire\SearchComponent::class)->name('search');
+
 Route::get('erro/{msg}',Erros::class)->name('erros');
+Route::get('pesquisar/', [\App\Http\Controllers\Configuracao::class, 'PesquisarImovel'])->name('pesquisar.imovel');
 
 Route::view('dashboard', 'dashboard')
     ->middleware(['auth', 'verified'])
