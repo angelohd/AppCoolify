@@ -69,39 +69,39 @@
                         <strong>Descrição:</strong> {{ ucfirst($visita->imovel->descricao) }}
                     </p>
                 </div>
+            </div>
+            <br>
 
-                <div class="max-w-4xl mx-auto px-4 py-10 space-y-4">
+            <div class="border border-gray-100 rounded-xl p-6 bg-gray-50 grid grid-cols-3 gap-4">
+                <h2 class="text-lg text-gray-700 mb-4">
+                    📃 Formulario de contracto
+                </h2>
+
+                @if($visita->imovel->disponivel)
+
+                <flux:input type="date" max="2999-12-31" label="Data inicio *" wire:model.defer="data_inicio"
+                     />
+                <flux:input type="date" max="2999-12-31" label="Data fim *" wire:model.defer="data_fim"  />
+                <flux:input label="Valor mensal *" wire:model.defer="valor_mensal"  />
+                <flux:input label="Valor caução *" wire:model.defer="valor_caucao"  />
+                <flux:textarea label="Observação" wire:model.defer="observacao"  rows="3"
+                    placeholder="Observação" />
+                    <label for="">Comprovativo de pagamento:</label>
+                <input type="file" class="" wire:model="comprovativo_pagamento">
+
+                <div class="flex justify-end gap-2">
                     @include('components.alert')
-                    @if ($visita->status == 'pendente')
-                        <flux:button wire:click="ConfiguracaoVisita('confirmada')" color="green" icon="calendar">
-                            Confirmar Visita
-                        </flux:button>
-                    @endif
-
-                    @if ($visita->status == 'confirmada')
-                        <flux:button wire:click="ConfiguracaoVisita('em_curso')" color="red">
-                            Iniciar Visita com o cliente
-                        </flux:button>
-
-                        <flux:button wire:click="ConfiguracaoVisita('cancelado')" color="red">
-                            Cancelar Visita
-                        </flux:button>
-                    @endif
-
-                    @if ($visita->status == 'em_curso')
-                        <flux:button wire:click="ConfiguracaoVisita('concluido')" color="green">
-                            Finalizar Visita
-                        </flux:button>
-                    @endif
-
-                    @if ($visita->status == 'concluido')
-                        <flux:link href="{{ route('imovel.entrar.contracto', $idEncrypt) }}">
-                            📃 Proceder com assinatura de contracto
-                        </flux:link>
-                    @endif
+                    <flux:button wire:click="ConfirmarContarcto" color="green" icon="">
+                        Confirmar
+                    </flux:button>
 
                 </div>
-
+                @else
+                <div
+                class="rounded-lg border border-green-300 bg-green-100 px-4 py-3 text-sm text-green-800 dark:border-green-700 dark:bg-green-900/30 dark:text-green-200">
+                Este imovel ainda tem um contracto valido, entre em contacto com o propriestario.</strong>
+            </div>
+                @endif
             </div>
         @else
             <div class="text-red-500 text-sm">

@@ -10,10 +10,10 @@
                 <!-- Número de utilizadores -->
                 <div class="relative z-10 text-center">
                     <span class="block text-5xl md:text-6xl font-bold text-zinc-900 dark:text-white">
-                        {{ count($visitas) }}
+                        {{ count($contractos) }}
                     </span>
                     <span class="block text-lg md:text-xl text-zinc-600 dark:text-zinc-400">
-                        Imoveis pendentes de aprovação
+                        Contractos feitos
                     </span>
                 </div>
             </div>
@@ -28,13 +28,13 @@
                         Nº
                     </th>
                     <th class="px-4 py-3 text-left text-sm font-medium text-zinc-600 dark:text-zinc-400">
-                        Visitante
+                        Proprietario
                     </th>
                     <th class="px-4 py-3 text-left text-sm font-medium text-zinc-600 dark:text-zinc-400">
-                        Proprietario do imovel
+                        Data inicio
                     </th>
                     <th class="px-4 py-3 text-left text-sm font-medium text-zinc-600 dark:text-zinc-400">
-                        Dados do imovel
+                        Data fim
                     </th>
                     <th class="px-4 py-3 text-left text-sm font-medium text-zinc-600 dark:text-zinc-400">
                         Estado
@@ -46,32 +46,32 @@
             </thead>
 
             <tbody class="bg-white dark:bg-zinc-800 divide-y divide-zinc-200 dark:divide-zinc-700">
-                @forelse($visitas as $imovel)
+                @forelse($contractos as $cc)
                     @php
-                        $idEncrypt = Crypt::encrypt($imovel->id);
+                        $idEncrypt = Crypt::encrypt($cc->id);
                     @endphp
                     <tr class="">
                         <td class="px-4 py-3 text-sm text-zinc-900 dark:text-white">
                             {{ $loop->iteration }}
                         </td>
                         <td class="px-4 py-3 text-sm text-zinc-900 dark:text-white">
-                            {{ $imovel->getvisitante->name }}
+                            {{ $cc->imovel->user->name }}
                         </td>
                         <td class="px-4 py-3 text-sm text-zinc-900 dark:text-white">
-                            {{ $imovel->imovel->user->name }}
+                            {{ $cc->data_inicio }}
                         </td>
                         <td class="px-4 py-3 text-sm text-zinc-900 dark:text-white">
-                            {{ $imovel->imovel->endereco }}
+                            {{ $cc->data_fim }}
                         </td>
 
                         <td class="px-4 py-3 text-sm text-zinc-600 dark:text-zinc-300">
-                            <flux:badge :color="$imovel->status ? 'green' : 'red'">
-                                {{ $imovel->status }}
+                            <flux:badge :color="$cc->status == 'ativo' ? 'green' : 'red'">
+                                {{ $cc->status }}
                             </flux:badge>
                         </td>
 
                         <td class="px-4 py-3 text-right">
-                            <flux:link href="{{ route('imovel.visita.marcada.view', $idEncrypt) }}">
+                            <flux:link href="{{ route('imovel.view.contracto', $idEncrypt) }}">
                                 Detalhes
                             </flux:link>
                         </td>
@@ -79,7 +79,7 @@
                 @empty
                     <tr>
                         <td colspan="4" class="px-4 py-6 text-center text-sm text-zinc-500">
-                            Nenhuma visita encontrada
+                            Nenhum utilizador encontrado
                         </td>
                     </tr>
                 @endforelse

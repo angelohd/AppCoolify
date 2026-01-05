@@ -65,6 +65,74 @@
                 </div>
             @endif
         @endif
+        <hr>
+        <h2 class="text-lg font-semibold text-zinc-900 dark:text-white">Contractos</h2>
+        <div class="w-full overflow-x-auto rounded-lg border border-zinc-200 dark:border-zinc-700">
+            <table class="w-full table-auto divide-y divide-zinc-200 dark:divide-zinc-700">
+                <thead class="bg-zinc-50 dark:bg-zinc-900">
+                    <tr>
+                        <th class="px-4 py-3 text-left text-sm font-medium text-zinc-600 dark:text-zinc-400">
+                            Nº
+                        </th>
+                        <th class="px-4 py-3 text-left text-sm font-medium text-zinc-600 dark:text-zinc-400">
+                            Proprietario
+                        </th>
+                        <th class="px-4 py-3 text-left text-sm font-medium text-zinc-600 dark:text-zinc-400">
+                            Data inicio
+                        </th>
+                        <th class="px-4 py-3 text-left text-sm font-medium text-zinc-600 dark:text-zinc-400">
+                            Data fim
+                        </th>
+                        <th class="px-4 py-3 text-left text-sm font-medium text-zinc-600 dark:text-zinc-400">
+                            Estado
+                        </th>
+                        <th class="px-4 py-3 text-right text-sm font-medium text-zinc-600 dark:text-zinc-400">
+                            Ações
+                        </th>
+                    </tr>
+                </thead>
+
+                <tbody class="bg-white dark:bg-zinc-800 divide-y divide-zinc-200 dark:divide-zinc-700">
+                    @forelse($imovel->contractos as $cc)
+                        @php
+                            $idEncrypt = Crypt::encrypt($cc->id);
+                        @endphp
+                        <tr class="">
+                            <td class="px-4 py-3 text-sm text-zinc-900 dark:text-white">
+                                {{ $loop->iteration }}
+                            </td>
+                            <td class="px-4 py-3 text-sm text-zinc-900 dark:text-white">
+                                {{ $cc->imovel->user->name }}
+                            </td>
+                            <td class="px-4 py-3 text-sm text-zinc-900 dark:text-white">
+                                {{ $cc->data_inicio }}
+                            </td>
+                            <td class="px-4 py-3 text-sm text-zinc-900 dark:text-white">
+                                {{ $cc->data_fim }}
+                            </td>
+
+                            <td class="px-4 py-3 text-sm text-zinc-600 dark:text-zinc-300">
+                                <flux:badge :color="$cc->status == 'ativo' ? 'green' : 'red'">
+                                    {{ $cc->status }}
+                                </flux:badge>
+                            </td>
+
+                            <td class="px-4 py-3 text-right">
+                                <flux:link href="{{ route('imovel.view.contracto', $idEncrypt) }}">
+                                    Detalhes
+                                </flux:link>
+                            </td>
+                        </tr>
+                    @empty
+                        <tr>
+                            <td colspan="4" class="px-4 py-6 text-center text-sm text-zinc-500">
+                                Nenhum utilizador encontrado
+                            </td>
+                        </tr>
+                    @endforelse
+                </tbody>
+            </table>
+        </div>
 
 
     </div>

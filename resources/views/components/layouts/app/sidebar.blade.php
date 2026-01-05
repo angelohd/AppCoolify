@@ -37,6 +37,9 @@
                     <flux:navlist.item icon="user" :href="route('imovel.visitas.marcadas')"
                         :current="request()->routeIs('imovel*')" wire:navigate>{{ __('Visitas marcadas') }}
                     </flux:navlist.item>
+                    <flux:navlist.item icon="user" :href="route('imovel.meus.contractos')"
+                        :current="request()->routeIs('imovel*')" wire:navigate>{{ __('Meus contractos') }}
+                    </flux:navlist.item>
                 </flux:navlist.group>
             </flux:navlist>
         @elseif($user->categoria_id == 3)

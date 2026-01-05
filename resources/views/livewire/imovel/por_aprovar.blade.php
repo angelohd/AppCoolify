@@ -75,12 +75,10 @@
                         </td>
 
                         <td class="px-4 py-3 text-right">
-                            <a href="{{ route('imovel.por.aprovar.view', $idEncrypt) }}">Detalhes</a>
 
-
-                            <flux:button size="sm" variant="ghost" icon="pencil">
+                            <flux:link href="{{ route('imovel.por.aprovar.view', $idEncrypt) }}">
                                 Detalhes
-                            </flux:button>
+                            </flux:link>
                         </td>
                     </tr>
                 @empty

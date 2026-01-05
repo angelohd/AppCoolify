@@ -7,10 +7,11 @@ use App\Models\Visita;
 
 class ViewVisitaMarcada extends Component
 {
-    public $idVisita = null, $visita = null, $decriptado = false;
+    public $idVisita = null, $visita = null, $decriptado = false,$idEncrypt = null;
     public function mount($id)
     {
         try {
+            $this->idEncrypt = $id;
             $this->idVisita = decrypt($id);
             $this->decriptado = true;
         } catch (\Exception $e) {
@@ -28,9 +29,23 @@ class ViewVisitaMarcada extends Component
 
     }
 
+    public function ConfiguracaoVisita($estado)
+    {
+        $estados = ['pendente', 'cancelado', 'em_curso', 'concluido', 'confirmada'];
+        if (in_array($estado, $estados)) {
+            Visita::where('id', $this->idVisita)->update(['status' => $estado]);
+            session()->flash('success', 'Visita ' . $estado . ' com sucesso!');
+        }
+    }
+
     public function ConfirmarVisita()
     {
         Visita::where('id', $this->idVisita)->update(['status' => 'confirmada']);
         session()->flash('success', 'Visita confirmada com sucesso!');
+    }
+    public function CancelarVisita()
+    {
+        Visita::where('id', $this->idVisita)->update(['status' => 'cancelado']);
+        session()->flash('success', 'Visita cancelado com sucesso!');
     }
 }

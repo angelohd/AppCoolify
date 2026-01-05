@@ -32,4 +32,8 @@ class Imovel extends Model
     public function imagens(){
         return $this->hasMany(imgens_imovel::class,'imovel_id','id');
     }
+
+    public function contractos(){
+       return $this->hasMany(Contracto::class,'imovel_id','id');
+    }
 }

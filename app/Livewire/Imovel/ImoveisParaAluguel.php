@@ -13,12 +13,14 @@ class ImoveisParaAluguel extends Component
         if ($this->search) {
             $this->imoveis = Imovel::with(['user_aprovado'])
                 ->where('aprovado', true)
+                ->where('disponivel', true)
                 ->where('observacao', 'like', '%' . $this->search . '%')
                 ->orderBy('id', 'desc')
                 ->get();
         } else {
             $this->imoveis = Imovel::with(['user_aprovado'])
                 ->where('aprovado', true)
+                ->where('disponivel', true)
                 ->orderBy('id', 'desc')
                 ->take(100)
                 ->get();

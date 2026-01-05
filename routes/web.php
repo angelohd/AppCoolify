@@ -51,5 +51,10 @@ Route::middleware(['auth'])->group(function () {
             Route::get('ver/{id}',\App\Livewire\Imovel\ViewImovel::class)->name('ver');
             Route::get('visitas/marcadas',\App\Livewire\Imovel\VisitasMarcadas::class)->name('visitas.marcadas');
             Route::get('visita/marcada/ver/{id}',\App\Livewire\Imovel\ViewVisitaMarcada::class)->name('visita.marcada.view');
+
+            Route::get('entrar/contracto/{id}',\App\Livewire\Imovel\Contracto::class)->name('entrar.contracto');
+
+            Route::get('meus/contractos',\App\Livewire\Imovel\MeusContracto::class)->name('meus.contractos');
+            Route::get('/contracto/{id}',\App\Livewire\Imovel\ViewMeuContracto::class)->name('view.contracto');
         });
 });

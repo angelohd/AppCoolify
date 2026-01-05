@@ -23,6 +23,8 @@ return new class extends Migration {
             $table->decimal('valor_mensal', 10, 2);
             $table->enum('status', ['ativo', 'encerrado', 'pendente'])->default('pendente');
             $table->decimal('valor_caucao', 10, 2)->nullable();
+            $table->text('observacao')->nullable();
+            $table->text('comprovativo_pagamento')->nullable();
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->useCurrent()->useCurrentOnUpdate();
             $table->softDeletes();

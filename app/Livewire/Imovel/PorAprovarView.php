@@ -37,6 +37,7 @@ class PorAprovarView extends Component
         if ($imovel) {
             Imovel::where('id', $this->idImovel)->update([
                 'aprovado' => true,
+                'disponivel' => true,
                 'aprovado_por' => Auth::id(),
             ]);
             session()->flash('success', 'Imovel aprovado e publicado.');

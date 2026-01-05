@@ -1,4 +1,4 @@
-<div class="bg-white min-h-screen">
+<div class="min-h-screen">
 
     <!-- Galeria de Imagens -->
     {{--
