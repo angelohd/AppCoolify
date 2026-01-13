@@ -26,6 +26,9 @@
                     <flux:navlist.item icon="user" :href="route('administrador.utilizadores')"
                         :current="request()->routeIs('administrador*')" wire:navigate>{{ __('Utilizadores') }}
                     </flux:navlist.item>
+                    <flux:navlist.item icon="list-bullet" :href="route('administrador.actividades')"
+                        :current="request()->routeIs('administrador*')" wire:navigate>{{ __('Actividades sistema') }}
+                    </flux:navlist.item>
                 </flux:navlist.group>
             </flux:navlist>
         @elseif ($user->categoria_id == 2)

@@ -50,7 +50,7 @@
                 <hr>
                 <div class="flex justify-end gap-2">
                     @include('components.alert')
-                    <flux:button wire:click="Aprovar" color="green" icon="user-plus">
+                    <flux:button wire:click="Aprovar" color="green" icon="check-circle">
                         Aprovar para publicação
                     </flux:button>
 
@@ -58,7 +58,7 @@
             @else
                 <div class="flex justify-end gap-2">
                     @include('components.alert')
-                    <flux:button wire:click="Eliminar" color="danger">
+                    <flux:button wire:click="Eliminar" color="danger" icon="check-circle">
                         Apagar publicação
                     </flux:button>
 

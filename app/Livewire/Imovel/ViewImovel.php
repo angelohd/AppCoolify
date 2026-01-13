@@ -51,5 +51,6 @@ class ViewImovel extends Component
         ]);
 
         session()->flash('success', 'Visita agendada com sucesso.');
+        logActivity('Agendou a visita para um imovel', null, [], Auth::id());
     }
 }

@@ -4,6 +4,7 @@ namespace App\Livewire\Imovel;
 
 use Livewire\Component;
 use App\Models\Visita;
+use Illuminate\Support\Facades\Auth;
 
 class ViewVisitaMarcada extends Component
 {
@@ -35,17 +36,20 @@ class ViewVisitaMarcada extends Component
         if (in_array($estado, $estados)) {
             Visita::where('id', $this->idVisita)->update(['status' => $estado]);
             session()->flash('success', 'Visita ' . $estado . ' com sucesso!');
+            logActivity('Estado da visita actualizado para '.$estado, null, [], Auth::id());
         }
     }
 
     public function ConfirmarVisita()
     {
         Visita::where('id', $this->idVisita)->update(['status' => 'confirmada']);
+        logActivity('Visita confirmada com sucesso!', null, [], Auth::id());
         session()->flash('success', 'Visita confirmada com sucesso!');
     }
     public function CancelarVisita()
     {
         Visita::where('id', $this->idVisita)->update(['status' => 'cancelado']);
+        logActivity('Cancelou uma visita', null, [], Auth::id());
         session()->flash('success', 'Visita cancelado com sucesso!');
     }
 }

@@ -20,10 +20,10 @@ Route::get('erro/{msg}',Erros::class)->name('erros');
 Route::get('pesquisar/', [\App\Http\Controllers\Configuracao::class, 'PesquisarImovel'])->name('pesquisar.imovel');
 
 Route::view('dashboard', 'dashboard')
-    ->middleware(['auth', 'verified'])
+    ->middleware(['auth', 'verified','geral'])
     ->name('dashboard');
 
-Route::middleware(['auth'])->group(function () {
+Route::middleware(['auth','geral'])->group(function () {
     Route::redirect('settings', 'settings/profile');
 
     Volt::route('settings/profile', 'settings.profile')->name('profile.edit');
@@ -43,6 +43,7 @@ Route::middleware(['auth'])->group(function () {
 
         Route::prefix('administrador')->name('administrador.')->group(function(){
             Route::get('utilizadores', \App\Livewire\Administrador\Utilizador::class)->name('utilizadores');
+            Route::get('actividades/sistema', \App\Livewire\Administrador\Actividades::class)->name('actividades');
         });
 
         Route::prefix('imovel')->name('imovel.')->group(function(){

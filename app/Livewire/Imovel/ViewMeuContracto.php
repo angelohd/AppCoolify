@@ -4,6 +4,7 @@ namespace App\Livewire\Imovel;
 
 use App\Models\Contracto;
 use App\Models\Imovel;
+use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 
 class ViewMeuContracto extends Component
@@ -43,5 +44,6 @@ class ViewMeuContracto extends Component
             'disponivel'=>true,
         ]);
         session()->flash('success', 'Contracto encerado');
+        logActivity('Encerou contracto de um imovel', null, [], Auth::id());
     }
 }

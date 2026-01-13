@@ -23,7 +23,7 @@
 
         <div class="flex justify-end gap-2">
             @include('components.alert')
-            <flux:button wire:click="store" color="green" icon="user-plus">
+            <flux:button wire:click="store" color="green" icon="check-circle">
                 Publicar
             </flux:button>
 

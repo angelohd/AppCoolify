@@ -91,7 +91,7 @@
 
                 <div class="flex justify-end gap-2">
                     @include('components.alert')
-                    <flux:button wire:click="ConfirmarContarcto" color="green" icon="">
+                    <flux:button wire:click="ConfirmarContarcto" color="green" icon="check-circle">
                         Confirmar
                     </flux:button>
 

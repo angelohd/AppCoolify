@@ -60,6 +60,7 @@ class Publicar extends Component
             }
             $this->reset();
             session()->flash('success', 'Publicação feita com successo, aguarde a aprovação do mediador');
+            logActivity('criou a plucação de um imovel', $imovel, [], Auth::id());
         } catch (\Throwable $th) {
             //dd($th);
             session()->flash('error', 'Preencha os campos corretamente.');

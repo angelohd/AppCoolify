@@ -10,7 +10,7 @@
                 <!-- Número de utilizadores -->
                 <div class="relative z-10 text-center">
                     <span class="block text-5xl md:text-6xl font-bold text-zinc-900 dark:text-white">
-                        {{ count($users) }}
+                        {{ count($actividades) }}
                     </span>
                     <span class="block text-lg md:text-xl text-zinc-600 dark:text-zinc-400">
                         Utilizadores Registados
@@ -18,59 +18,7 @@
                 </div>
             </div>
 
-            <!-- Card 2: Exemplo placeholder -->
-            <div
-                class="relative aspect-video overflow-hidden rounded-xl border border-neutral-200 dark:border-neutral-700 flex items-center justify-center">
-                <x-placeholder-pattern
-                    class="absolute inset-0 size-full stroke-gray-900/20 dark:stroke-neutral-100/20" />
-
-                <div class="relative z-10 text-center">
-                    <span class="block text-5xl md:text-6xl font-bold text-zinc-900 dark:text-white">
-                        42
-                    </span>
-                    <span class="block text-lg md:text-xl text-zinc-600 dark:text-zinc-400">
-                        Outro dado
-                    </span>
-                </div>
-            </div>
-
         </div>
-    </div>
-
-    <div class="p-6 max-w-3xl space-y-6">
-
-        <h2 class="text-lg font-semibold text-zinc-900 dark:text-white">
-            Registar Utilizador
-        </h2>
-        <div class="grid gap-4">
-            <div class="grid grid-cols-3 gap-4">
-                <flux:input label="Nome completo: *" wire:model.defer="nome" required/>
-                <flux:input label="Número de Identidade:" wire:model.defer="numero" />
-                <flux:input label="Telefone:" wire:model.defer="telefone" />
-            </div>
-            <div class="grid grid-cols-2 gap-4">
-                <flux:input type="email" label="Email: *" wire:model.defer="email" required/>
-
-                <flux:select label="Categoria: *" wire:model.defer="categoria_id" required>
-                    <option hidden>Selecione a categoria</option>
-                    @foreach ($categorias as $categoria)
-                        <option value="{{ $categoria->id }}">
-                            {{ $categoria->categoria }}
-                        </option>
-                    @endforeach
-                </flux:select>
-            </div>
-        </div>
-
-        <div class="flex justify-end gap-2">
-            @include('components.alert')
-
-            <flux:button icon="check" wire:click="store" color="green" icon="user-plus">
-                {{ $info }}
-            </flux:button>
-
-        </div>
-
     </div>
 
     <div class="flex gap-2">
@@ -85,54 +33,58 @@
                         Nº
                     </th>
                     <th class="px-4 py-3 text-left text-sm font-medium text-zinc-600 dark:text-zinc-400">
-                        Nome
+                        Utilizador
                     </th>
                     <th class="px-4 py-3 text-left text-sm font-medium text-zinc-600 dark:text-zinc-400">
-                        Nº Identificação
+                        Descrição
                     </th>
                     <th class="px-4 py-3 text-left text-sm font-medium text-zinc-600 dark:text-zinc-400">
-                        Email
+                        Rota
                     </th>
                     <th class="px-4 py-3 text-left text-sm font-medium text-zinc-600 dark:text-zinc-400">
-                        Categoria
+                        User-agente
                     </th>
                     <th class="px-4 py-3 text-left text-sm font-medium text-zinc-600 dark:text-zinc-400">
-                        Estado
+                        Metodo
                     </th>
-                    <th class="px-4 py-3 text-right text-sm font-medium text-zinc-600 dark:text-zinc-400">
-                        Ações
+                    <th class="px-4 py-3 text-left text-sm font-medium text-zinc-600 dark:text-zinc-400">
+                        IP
                     </th>
+
                 </tr>
             </thead>
 
             <tbody class="bg-white dark:bg-zinc-800 divide-y divide-zinc-200 dark:divide-zinc-700">
-                @forelse($users as $user)
+                @forelse($actividades as $user)
+                    @php
+                        // Converte o JSON para array. Se já for array/objeto, o json_decode lidará com isso.
+                        $props = is_array($user->properties) ? $user->properties : json_decode($user->properties, true);
+                    @endphp
                     <tr class="">
                         <td class="px-4 py-3 text-sm text-zinc-900 dark:text-white">
                             {{ $loop->iteration }}
                         </td>
                         <td class="px-4 py-3 text-sm text-zinc-900 dark:text-white">
-                            {{ $user->pessoa->nome }}
+                            {{ $user->getUser->name }}
                         </td>
                         <td class="px-4 py-3 text-sm text-zinc-900 dark:text-white">
-                            {{ $user->pessoa->numero_identidade }}
+                            {{ Str::limit($user->description, 60, '...') }}
                         </td>
                         <td class="px-4 py-3 text-sm text-zinc-600 dark:text-zinc-300">
-                            {{ $user->email }}
+                            {{ Str::limit($props['rota'] ?? 'N/A', 60, '...') }}
                         </td>
                         <td class="px-4 py-3 text-sm text-zinc-600 dark:text-zinc-300">
-                            {{ $user->categoria->categoria }}
+                            {{ $props['agente'] ?? 'N/A' }}
+                        </td>
+                        <td class="px-4 py-3 text-sm text-zinc-600 dark:text-zinc-300">
+                           {{ $props['metodo'] ?? 'N/A' }}
                         </td>
                         <td class="px-4 py-3">
-                            <flux:badge :color="$user->status ? 'green' : 'red'">
-                                {{ $user->status ? 'Ativo' : 'Inativo' }}
+                            <flux:badge>
+                               {{ $props['ip'] ?? 'N/A' }}
                             </flux:badge>
                         </td>
-                        <td class="px-4 py-3 text-right">
-                            <flux:button size="sm" variant="ghost" icon="pencil" wire:click="EditarUser({{ $user->id }})">
-                                Editar
-                            </flux:button>
-                        </td>
+
                     </tr>
                 @empty
                     <tr>

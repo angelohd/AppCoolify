@@ -55,7 +55,7 @@ class Contracto extends Component
                     $this->comprovativo_pagamento = $nome;
                 }
             }
-            ModelsContracto::create([
+            $contarcto = ModelsContracto::create([
                 'imovel_id' => $this->visita->imovel_id,
                 'inquilono' => $this->visita->visitante,
                 'mediador' => Auth::id(),
@@ -72,6 +72,7 @@ class Contracto extends Component
             ]);
             //$this->reset();
             session()->flash('success', 'Contracto feito com successo');
+            logActivity('Assinou um contracto', $contarcto, [], Auth::id());
         } catch (\Throwable $th) {
             //dd($th);
             session()->flash('error', 'Preencha os campos corretamente.');

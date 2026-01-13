@@ -41,6 +41,7 @@ class PorAprovarView extends Component
                 'aprovado_por' => Auth::id(),
             ]);
             session()->flash('success', 'Imovel aprovado e publicado.');
+            logActivity('Aprovou a publicação de um imovel', null, [], Auth::id());
         } else {
             session()->flash('warning', 'Ups! este imovel já foi aprovado por outro utilizador');
         }
@@ -48,6 +49,7 @@ class PorAprovarView extends Component
 
     public function Eliminar(){
         Imovel::where('id',$this->idImovel)->delete();
+        logActivity('Eliminou um imovel', null, [], Auth::id());
         return redirect()->route('imovel.pessoal');
     }
 }

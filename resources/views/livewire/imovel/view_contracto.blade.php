@@ -101,7 +101,7 @@
 
             @if ($contarcto->status == 'ativo')
                 @if (Auth::id() == $contarcto->imovel->user_id)
-                    <flux:button wire:click="EncerarContarcto" color="green">
+                    <flux:button wire:click="EncerarContarcto" color="green" icon="check-circle">
                         ❌ Encerar contracto
                     </flux:button>
                 @endif
