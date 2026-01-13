@@ -61,7 +61,7 @@
             <div>
                 <p><span class="text-gray-500">Publicado em:</span> {{ $imovel->created_at->format('d/m/Y') }}</p>
                 <p><span class="text-gray-500">Propritario:</span> {{ $imovel->user->name }}</p>
-                <p><span class="text-gray-500">Mediador:</span> {{ $imovel->user_aprovado->name }} // Telefone:
+                <p><span class="text-gray-500">Intermediario:</span> {{ $imovel->user_aprovado->name }} // Telefone:
                     {{ $imovel->user->pessoa->telefone }}</p>
                 <p><span class="text-gray-500">Disponível:</span> {{ $imovel->disponivel ? 'Sim' : 'Não' }}</p>
             </div>

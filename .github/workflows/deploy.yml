@@ -1,13 +1,44 @@
-name: Redeploy Coolify
+name: 'Aluguel de casa'
 
 on:
   push:
-    branches: [ master ]
+    branches:
+      - master
 
 jobs:
-  deploy:
+  build-and-deploy:
     runs-on: ubuntu-latest
+
     steps:
-      - name: Trigger Coolify Redeploy
-        run: |
-          curl -X POST https://coolify.ndaysystem.com/api/v1/deploy?uuid=fcos84gg4oo0og448cgc48k4&force=false
+      - name: Checkout do código
+        uses: actions/checkout@v4
+
+      - name: Configurar PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.3'
+          extensions: mbstring, bcmath, gd, intl, zip, pdo_mysql
+          tools: composer
+
+      - name: Instalar dependências PHP
+        run: composer install --no-interaction --prefer-dist --optimize-autoloader
+
+      - name: Deploy no Servidor
+        uses: appleboy/ssh-action@v0.1.10
+        with:
+          host: ${{ secrets.SERVER_IP }}
+          username: ${{ secrets.SERVER_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          port: ${{ secrets.SSH_PORT }}
+          script: |
+            cd ${{ secrets.PROJECT_DIR }}
+            git fetch origin master
+            git reset --hard origin/master
+            git clean -fd
+            composer install --no-interaction --prefer-dist --optimize-autoloader
+            php artisan config:clear
+            php artisan config:cache
+            php artisan route:cache
+            php artisan view:cache
+            php artisan optimize:clear
+            php artisan migrate --force

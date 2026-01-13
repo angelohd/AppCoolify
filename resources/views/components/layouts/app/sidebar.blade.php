@@ -29,8 +29,8 @@
                 </flux:navlist.group>
             </flux:navlist>
         @elseif ($user->categoria_id == 2)
-            <flux:navlist variant="Mediador">
-                <flux:navlist.group :heading="__('Mediador')" class="grid">
+            <flux:navlist variant="Intermdiario">
+                <flux:navlist.group :heading="__('Intermdiario')" class="grid">
                     <flux:navlist.item icon="user" :href="route('imovel.por.aprovar')"
                         :current="request()->routeIs('imovel*')" wire:navigate>{{ __('Imovel por aprovar') }}
                     </flux:navlist.item>
