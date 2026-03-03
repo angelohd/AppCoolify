@@ -21,6 +21,7 @@
             <flux:input
                 name="numero_identidade"
                 :label="__('Nº Indentidade')"
+                :value="old('numero_identidade')"
                 type="text"
                 autofocus
                 :placeholder="__('000000000MO000')"
@@ -29,7 +30,9 @@
             <flux:input
                 name="telefone"
                 :label="__('Telefone')"
+                :value="old('telefone')"
                 type="text"
+                required
                 autofocus
                 :placeholder="__('999999999')"
             />

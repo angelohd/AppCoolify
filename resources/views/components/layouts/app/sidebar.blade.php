@@ -19,7 +19,7 @@
         @if ($user->categoria_id == 1)
             <flux:navlist variant="Administrador">
                 <flux:navlist.group :heading="__('Administrador')" class="grid">
-                    <flux:navlist.item icon="home" :href="route('dashboard')"
+                    <flux:navlist.item :href="route('dashboard')"
                         :current="request()->routeIs('dashboard')" wire:navigate>{{ __('Dashboard') }}
                     </flux:navlist.item>
 
@@ -48,18 +48,18 @@
         @elseif($user->categoria_id == 3)
             <flux:navlist variant="Utilizador commum">
                 <flux:navlist.group :heading="__('Utilizador commum')" class="grid">
-                    <flux:navlist.item icon="home" :href="route('imovel.publicar')"
+                    <flux:navlist.item :href="route('imovel.publicar')"
                         :current="request()->routeIs('imovel*')" wire:navigate>{{ __('Publicar imovel') }}
                     </flux:navlist.item>
 
-                    <flux:navlist.item icon="home" :href="route('imovel.pessoal')"
+                    <flux:navlist.item :href="route('imovel.pessoal')"
                         :current="request()->routeIs('imovel*')" wire:navigate>{{ __('Meus imoveis') }}
                     </flux:navlist.item>
                 </flux:navlist.group>
             </flux:navlist>
         @endif
 
-        <flux:navlist.item icon="home" :href="route('imovel.pesquisar')" :current="request()->routeIs('imovel*')"
+        <flux:navlist.item :href="route('imovel.pesquisar')" :current="request()->routeIs('imovel*')"
             wire:navigate>{{ __('Imoveis para aluguel') }}
         </flux:navlist.item>
 
